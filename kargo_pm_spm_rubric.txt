@@ -1,0 +1,428 @@
+KARGO · PM / SPM HIRING RUBRIC
+Version 0.2 · DRAFT · pending Arjun's confirmation (Human gate 0.5)
+
+Sources: 8 past-hire CVs + ratings from the case brief; both JDs (PM, SPM).
+Not yet reviewed: hires/ interview notes and outcome notes.
+Changes in v0.2: C5 anchors rewritten against the JDs; Part F added
+(JD cross-check); years and location handling defined in Part A.
+
+Pattern name (proposed): "OPERATORS WHO BUILD"
+Kargo's best hires personally did the operational work Kargo's customers do,
+hit a gap in it, built the fix themselves, and got others to adopt it.
+They owned the outcome with no layer between them and the user.
+
+
+======================================================================
+PART A · HOW TO SCORE
+======================================================================
+
+1. Score every CV on 5 criteria. Each criterion is scored 0–4 using the
+   anchors below.
+
+2. Criteria C1–C4 are the same for both roles. C5 is scored TWICE: once
+   against the PM anchors and once against the SPM anchors.
+
+3. Weighted score = sum of (weight × level ÷ 4).
+   Output two totals per candidate: PM score /100 and SPM score /100.
+
+4. EVIDENCE RULE: every level above 0 must quote the CV line that
+   justifies it. No quote = level 0, marked "not evidenced — probe".
+
+5. "Not evidenced" is NOT "evidence against". Keep them separate. A short
+   or badly formatted CV should produce probes, not penalties.
+
+6. One event may support two criteria only if it genuinely shows both.
+   Otherwise count it once, under the stronger criterion.
+
+7. Score the work described, not the wrapper. Ignore CV length, design,
+   and the number of metrics quoted.
+
+8. NEVER use or infer from: name, gender, age, photo, marital status,
+   college name or tier, CGPA/marks, city or hometown, family background,
+   employer brand prestige, or employment gaps (turn gaps into a probe).
+   Certifications and tool lists score nothing unless tied to a described
+   outcome.
+
+9. The rubric ranks; it does not reject. No cut-off score. Every candidate
+   stays visible to Arjun.
+
+10. YEARS OF PM EXPERIENCE are NOT scored. The JDs ask for 2–4 (PM) and
+    5–8 (SPM), but in the past hires more years did not mean better
+    (Vikram had more PM years than Lavanya and rated lower). Instead,
+    report "PM years (from CV)" as an info field and flag if it sits
+    outside the JD range. Arjun decides what the flag means.
+
+11. LOCATION is NOT scored and NOT sent to the AI. Both roles are
+    in-office Mumbai (relocation accepted). This is a logistics question:
+    the interview invite asks the candidate to confirm it.
+
+
+======================================================================
+PART B · THE FIVE CRITERIA
+======================================================================
+
+----------------------------------------------------------------------
+C1 · OPERATOR-SIDE EXPERIENCE IN THE CUSTOMER'S WORLD      WEIGHT 30
+----------------------------------------------------------------------
+What it means
+  Has personally done the operational work Kargo's customers do: moving
+  shipments, handling documentation and customs, coordinating carriers,
+  resolving exceptions. Knows the user's day from the inside, not from
+  interviews.
+
+Why it is weighted highest
+  All 5 "Exceeds" hires have it. None of the 3 "Meets"/"Below" hires do.
+  It is the only clean separator in the set.
+
+Anchors
+  4  1+ year hands-on in freight forwarding, customs brokerage, 3PL,
+     port/terminal or carrier operations — shipments, documents or
+     exceptions handled directly.
+  3  Customer-facing or commercial role INSIDE a logistics operation,
+     working alongside ops daily; OR hands-on ops in adjacent physical
+     operations (warehousing, manufacturing supply chain, fulfilment floor).
+  2  Built for, sold to, or integrated with logistics from the outside
+     (e.g. API integrations with 3PLs) without doing the operational work.
+  1  Studied the domain (user research, consulting, analysis) only.
+  0  No evidence.
+
+Look for
+  Shipment volumes handled, document types named, counterparties named
+  (CHAs, shipping lines, customs, carriers), exceptions resolved.
+
+Guard
+  Score the described work. Not the employer's name, not the city,
+  not a family business connection.
+
+Probe if moving forward
+  "Walk me through a shipment that went wrong. What did you do in the
+  first hour?"
+
+
+----------------------------------------------------------------------
+C2 · SELF-STARTED FIXES THAT OTHER PEOPLE ADOPTED           WEIGHT 20
+----------------------------------------------------------------------
+What it means
+  Noticed a gap nobody assigned, built something to close it, and
+  colleagues or other teams adopted it.
+
+Why this weight
+  All 5 "Exceeds" hires show the strong form. The others show weaker
+  forms: builds that were part of their job, or no adoption evidence.
+  It separates less sharply than C1.
+
+Anchors
+  4  Unprompted fix, born from a gap they hit personally, AND explicit
+     adoption beyond themselves (team, other teams, became standard).
+  3  Unprompted fix with adoption, but limited scope OR adoption only
+     implied.
+  2  Built something useful that was within the role's expected remit;
+     OR unprompted but no adoption stated.
+  1  Contributed to someone else's initiative.
+  0  No evidence.
+
+Look for
+  "Found that…", "had no way to…", "built over a weekend", "adopted by",
+  "now standard", "retained permanently".
+
+Probe if moving forward
+  "Who asked you to build that? What happened when people started
+  using it?"
+
+
+----------------------------------------------------------------------
+C3 · OWNS THE OUTCOME WITH NO LAYER IN BETWEEN              WEIGHT 15
+----------------------------------------------------------------------
+What it means
+  Worked end-to-end, directly with the user, customer or outcome,
+  with no manager, PM or account layer buffering them. Took things to
+  closure.
+
+Why this weight
+  5 of 5 "Exceeds" hires show it; 1 of 3 others (partially). Useful but
+  not unique to the best hires.
+
+Anchors
+  4  Sole or senior-most owner AND in direct contact with the end user or
+     customer; owned to closure ("sole", "no layer", "independently").
+  3  Sole or senior owner without direct end-user contact; OR clear area
+     ownership with a light layer above.
+  2  Owns a component inside a larger layered team.
+  1  Supporting role only.
+  0  No evidence.
+
+Probe if moving forward
+  "Tell me about a call you made that nobody above you signed off on."
+
+
+----------------------------------------------------------------------
+C4 · DELIVERS UNDER CONSTRAINT                              WEIGHT 10
+----------------------------------------------------------------------
+What it means
+  Kept things running through pressure without extra resources:
+  volume spikes, vendor failures, deadlines, covering for others.
+
+Why this weight
+  4 of 5 "Exceeds" hires show it explicitly; the others only as routine
+  job duty. It matters at a 40→70 person Series A, but it is the
+  easiest criterion to overstate on a CV, so it is weighted lowest.
+
+Anchors
+  4  Specific incident: absorbed a spike, failure or gap with no added
+     resources, and the outcome held.
+  3  Delivered under a stated pressure or deadline, less detail.
+  2  Pressure handled as a routine part of the role (on-call rotation).
+  1  Generic claim only ("thrives under pressure").
+  0  No evidence.
+
+Probe if moving forward
+  "What broke last quarter, and what did you drop to fix it?"
+
+
+----------------------------------------------------------------------
+C5 · PRODUCT JUDGMENT AT THE APPLIED LEVEL                  WEIGHT 25
+     (scored twice: PM anchors and SPM anchors)
+----------------------------------------------------------------------
+What it means
+  Evidence of product work at the level applied for, as each JD
+  defines it. The two levels are different jobs, not the same job at
+  different seniority:
+    PM  = core operations platform; discovery with daily users;
+          ship, kill, learn in short cycles.
+    SPM = integration and data layer; long-consequence architectural
+          calls (build / configure / stay away); senior-most PM who
+          defines how the PM function works.
+
+Why it is not weighted higher
+  This is what the JD measures, and JD-matching is what failed for
+  11 weeks. On shipping volume and credentials alone, Vikram ("Meets")
+  looks as strong as Lavanya ("Exceeds"). The craft difference that did
+  show is the one the PM JD names: she shipped AND killed things on
+  evidence.
+
+PM anchors  (from PM JD: "shipped things, killed things, and learned
+            from both — preferably in short cycles")
+  4  Owned a product area or roadmap end-to-end AND ran discovery
+     directly with the people who use it daily AND shipped at least one
+     thing and stopped/reversed at least one thing on evidence.
+  3  Owned features spec-to-release with measured adoption, but no
+     stop/reverse evidence, or discovery only through intermediaries.
+  2  Contributed to product work (APM, supporting PM, spec-writing in a
+     product-adjacent role).
+  1  Product-adjacent exposure only.
+  0  No evidence.
+
+SPM anchors  (from SPM JD: integration/data layer; "calls in ambiguous
+             situations and live with the consequences"; "help define
+             the practices… the PM function will run on")
+  Three SPM signals:
+    (a) PLATFORM: owned an integration, data, API or platform area, or a
+        product that had to work inside complex existing systems.
+    (b) SENIOR CALLS: was the senior-most product decision-maker for that
+        area (no senior PM above making the calls) and made
+        long-consequence calls such as build vs configure vs avoid.
+    (c) FUNCTION-BUILDING: defined practices, frameworks or standards
+        that other PMs or teams adopted.
+  4  All three signals, in an early-stage or rules-not-written setting.
+  3  Two of the three signals.
+  2  One of the three signals, OR a PM-level 4 record with none of them.
+  1  PM-level 2–3 record with none of the signals.
+  0  No evidence.
+  Note: managing PMs is NOT required. There are no PMs at Kargo for the
+  SPM to manage yet.
+
+Probes if moving forward
+  PM:  "What's something you shipped and then killed? How did you know?"
+       "Tell me what a freight forwarder's morning looks like."
+  SPM: "Tell me about an integration you chose NOT to build. What did
+       it cost you, and would you make the same call now?"
+       "What data-quality standard have you held a team to?"
+
+
+======================================================================
+PART C · CALIBRATION: SCORING THE 8 PAST HIRES
+======================================================================
+
+C1–C4 only (75 points; C5 does not apply to non-product roles).
+
+Hire                  Rating   C1  C2  C3  C4   /75
+--------------------  -------  --  --  --  --  ----
+Rohan Desai           Exceeds   4   4   4   4  75.0
+Sunita Krishnamurthy  Exceeds   4   4   4   4  75.0
+Meghna Tiwari         Exceeds   4   4   4   4  75.0
+Lavanya Iyer          Exceeds   4   4   4   3  72.5
+Aditya Shetty         Exceeds   3   4   4   3  65.0
+Preetham Rao          Below     2   2   2   2  37.5
+Rahul Bose            Meets     0   2   3   0  21.3
+Vikram Nair           Meets     0   2   2   0  17.5
+
+Key evidence behind the levels
+  Rohan    C1 ops executive at a CHA firm, 180+ shipments/month
+           C2 Excel tracker adopted by the 12-person ops team in 2 weeks
+           C3 turned field requirements into spec "without a product layer"
+           C4 18 months of higher volume with no added headcount
+  Sunita   C1 200+ shipments/month of documentation at a forwarder
+           C2 SOPs adopted in full within 60 days
+           C3 independent consultant; ran a client migration end-to-end
+           C4 vendor changed format without notice; redesigned workflow
+              over a weekend
+  Meghna   C1 freight forwarder client desk, customs documentation
+           C2 onboarding framework now used by the whole CS team
+           C3 no escalation to management in 14 months
+           C4 overnight customs hold resolved; covered 8 extra accounts
+  Lavanya  C1 carrier allocation and exception management at a 3PL
+           C2 visibility dashboard adopted by 2 other regional teams
+           C3 sole PM for three product areas
+           C4 owned outage post-mortem to closure
+  Aditya   C1 port services sales, worked alongside terminal ops (3)
+           C2 lost-deal post-mortem became standard qualification practice
+           C3 "no account manager layer between client and execution"
+           C4 won accounts during a port congestion incident (3)
+  Preetham C1 3PL API integrations from the e-commerce side (2)
+           C2 monitoring dashboard surfaced a bug; no adoption stated
+           C3 owns one service inside a 12-engineer team
+           C4 P1 on-call rotation (routine)
+  Rahul    C3 full marketing ownership, reports to CEO, no end-user contact
+  Vikram   C3 module owner within a 4-PM team
+
+Full scores for the two product hires (adding C5)
+                  C5_PM   PM score   C5_SPM   SPM score
+  Lavanya           4       97.5       3        91.3
+  Vikram            3       36.3       2        30.0
+
+  Lavanya C5_PM 4: sole PM; 3 discovery tracks with forwarders; shipped
+    6 features, killed 2 on usage data.
+  Lavanya C5_SPM 3: (a) owned carrier integration, wrote first API docs;
+    (b) sole PM making calls engineering "trusted immediately";
+    (c) no evidence of practices adopted by other PMs.
+  Vikram C5_PM 3: shipped 12 features with ARR impact; 40+ user
+    interviews; no stop/reverse evidence.
+  Vikram C5_SPM 2: (c) PRD template adopted by the PM team; no platform
+    ownership; worked within a 4-PM team.
+
+  Neither past PM hire was an SPM, so the SPM anchors have no ground
+  truth in this data (see Part D, flag 6).
+
+Two natural experiments in the data
+  1. Rohan vs Preetham: nearly identical technical CVs (Python,
+     PostgreSQL, FastAPI, AWS, indexing fix, migration, mentoring two
+     juniors, on-call). Different outcomes. The visible difference is
+     Rohan's three years in freight operations.
+  2. Lavanya vs Vikram: Vikram has more PM years, more features shipped,
+     and the stronger credentials. Lavanya rated higher. The visible
+     difference is her carrier-operations background and her record of
+     killing features on data.
+
+Signals that did NOT predict (and are excluded)
+  The most credentialed hires (MBA from a top school, product
+  certifications, conference talks, open-source PRs, coding-platform
+  profiles) are all in the non-Exceeds group. Every hire quoted metrics.
+  Years of experience and tool lists did not separate anyone.
+
+
+======================================================================
+PART D · LIMITS AND FLAGS FOR ARJUN (decide at Gate 0.5)
+======================================================================
+
+1. SMALL SAMPLE. 8 hires, only 2 PMs. The C1 split (5 of 5 vs 0 of 3)
+   is striking but small. There is a plausible reason it is real: Kargo
+   sells to freight forwarders, so people who have done the job
+   understand the customer.
+
+2. SEPARATES "EXCEEDS" FROM THE REST, NOT "MEETS" FROM "BELOW".
+   Preetham (Below) scores above Rahul and Vikram (Meets). Whatever made
+   Preetham "Below" is not in his CV. Check his interview and outcome
+   notes in hires/.
+
+3. "STILL AT KARGO AND THRIVING" NOT VERIFIED. Ratings are from the
+   brief. Check the outcome notes for anyone who has left before
+   treating them as a positive example.
+
+4. C1 AT 30 COULD UNDER-RANK A STRONG PM WITH NO LOGISTICS BACKGROUND.
+   Mitigated by: no cut-off, everyone visible, Arjun decides.
+   If Arjun believes domain can be learned on the job, move 10 points
+   from C1 to C5 (C1 = 20, C5 = 35).
+
+5. INTERVIEW-ONLY TRAITS CANNOT BE SCORED FROM CVs. Example: Lavanya's
+   "she doesn't hedge" came from a performance review. Traits like this
+   go into the interview brief as probes, not into the score.
+
+6. SPM ANCHORS ARE JD-DERIVED ONLY. No past hire was an SPM, so C5_SPM
+   has no calibration. C1–C4 still apply, because the pattern held
+   across every function, including engineering, sales and operations
+   leads.
+
+7. THE JD AND THE PATTERN DISAGREE ON ONE POINT. The PM JD asks for
+   "genuine curiosity" about ground-level operations; the SPM JD calls
+   ops familiarity "a genuine advantage". The past hires show that
+   LIVED operational experience separates the best, not curiosity.
+   C1 therefore scores lived experience, and curiosity becomes a probe.
+   Arjun should confirm he agrees with this reading.
+
+
+======================================================================
+PART E · OUTPUT FORMAT FOR THE SCORING STEP (A4)
+======================================================================
+
+Return JSON only, one object per candidate:
+
+{
+  "candidate_id": "cv_014",
+  "applied_role": "PM",
+  "criteria": {
+    "C1": {"level": 0-4, "evidence": "<quoted CV line or null>", "status": "evidenced | not_evidenced"},
+    "C2": {"level": 0-4, "evidence": "...", "status": "..."},
+    "C3": {"level": 0-4, "evidence": "...", "status": "..."},
+    "C4": {"level": 0-4, "evidence": "...", "status": "..."},
+    "C5_PM":  {"level": 0-4, "evidence": "...", "status": "..."},
+    "C5_SPM": {"level": 0-4, "evidence": "...", "status": "..."}
+  },
+  "pm_score": 0-100,
+  "spm_score": 0-100,
+  "pm_years_from_cv": <number or null>,
+  "years_flag": "within PM range | within SPM range | outside both | unclear",
+  "probes": ["<one probe per not_evidenced or level-1/2 criterion>"],
+  "one_line_rationale": "<why ranked here, plain English, no personal details>"
+}
+
+Weights (must sum to 100): C1 30 · C2 20 · C3 15 · C4 10 · C5 25
+
+
+======================================================================
+PART F · JD CROSS-CHECK: WHERE EACH JD REQUIREMENT LANDS
+======================================================================
+
+PRODUCT MANAGER JD
+  2–4 years PM experience ............... Not scored; info flag (Part A.10)
+  Company building for the first time ... Probe (C5 PM); "ideally" in JD
+  Comfort without structure; build the
+    PM rhythms yourself ................. C2 (built what didn't exist)
+  Shipped, killed, learned; short cycles  C5_PM anchor 4
+  Curiosity about ground-level ops ...... C1 scores lived experience;
+                                          curiosity is a probe (Part D.7)
+  6-month: features used unprompted ..... C5_PM (adoption evidence)
+  6-month: time inside forwarder ops .... C1
+  Mumbai / relocate ..................... Not scored; asked in invite
+
+SENIOR PRODUCT MANAGER JD
+  5–8 years PM experience ............... Not scored; info flag (Part A.10)
+  Owned an area with no senior PMs
+    above making the calls .............. C3 + C5_SPM signal (b)
+  Platform / integration / complex
+    existing technical environments ..... C5_SPM signal (a)
+  Calls in ambiguity; live with
+    consequences ........................ C5_SPM signal (b)
+  Early-stage / rules not written yet ... C5_SPM anchor 4 condition
+  Ops-heavy familiarity "genuine
+    advantage" .......................... C1
+  Define PM practices and frameworks .... C5_SPM signal (c) + C2
+  Reliability and data-quality standards  Probe (C5_SPM)
+  Cross-functional (sales, eng, ops) .... C3 (direct ownership) + probe
+  Mumbai / relocate ..................... Not scored; asked in invite
+
+What the JDs do not ask for, but the past hires show
+  C2 (self-started fixes adopted by others) and C4 (delivers under
+  constraint) are absent from both JDs as stated requirements. Together
+  they carry 30 of the 100 points. They are the part of the pattern the
+  spec "never asked for".
+

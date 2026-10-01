@@ -1,0 +1,70 @@
+{% macro icon(name, size=18, cls='') %}
+<svg class="icon {{ cls }}" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+{%- if name == 'check' -%}
+  <polyline points="20 6 9 17 4 12"/>
+{%- elif name == 'check-circle' -%}
+  <circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16 9"/>
+{%- elif name == 'alert-triangle' -%}
+  <path d="M12 3 2 20h20L12 3z"/><line x1="12" y1="9.5" x2="12" y2="14"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/>
+{%- elif name == 'alert-circle' -%}
+  <circle cx="12" cy="12" r="9"/><line x1="12" y1="7.5" x2="12" y2="13"/><circle cx="12" cy="16.3" r="0.6" fill="currentColor" stroke="none"/>
+{%- elif name == 'sliders' -%}
+  <line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="var(--surface)"/>
+  <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="var(--surface)"/>
+  <line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2" fill="var(--surface)"/>
+{%- elif name == 'grid' -%}
+  <rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/>
+  <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/>
+{%- elif name == 'users' -%}
+  <circle cx="9" cy="8" r="3.2"/><path d="M3.2 20c0-3.4 2.6-6.2 5.8-6.2s5.8 2.8 5.8 6.2"/>
+  <circle cx="17.3" cy="9.3" r="2.4"/><path d="M15.6 14c2.6.5 4.4 2.9 4.4 6"/>
+{%- elif name == 'upload-cloud' -%}
+  <path d="M7 18.5a4.2 4.2 0 0 1-.6-8.36A5.3 5.3 0 0 1 16.7 8.3H17a3.6 3.6 0 0 1 .2 7.2"/>
+  <path d="M12 21v-8.5"/><polyline points="9 15 12 11.8 15 15"/>
+{%- elif name == 'folder' -%}
+  <path d="M3 7.2A2 2 0 0 1 5 5.2h4l2 2h8a2 2 0 0 1 2 2v8.1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7.2z"/>
+{%- elif name == 'file-text' -%}
+  <path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/><line x1="9" y1="12.3" x2="16" y2="12.3"/><line x1="9" y1="15.8" x2="16" y2="15.8"/><line x1="9" y1="8.8" x2="11.5" y2="8.8"/>
+{%- elif name == 'inbox' -%}
+  <path d="M4 13h4l2 3h4l2-3h4"/><path d="M4 13 5.4 5.3A1.5 1.5 0 0 1 6.9 4h10.2a1.5 1.5 0 0 1 1.5 1.3L20 13"/><path d="M4 13v5.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V13"/>
+{%- elif name == 'clock' -%}
+  <circle cx="12" cy="12" r="9"/><polyline points="12 7.3 12 12 15.5 14"/>
+{%- elif name == 'search' -%}
+  <circle cx="10.3" cy="10.3" r="6.3"/><line x1="15" y1="15" x2="20" y2="20"/>
+{%- elif name == 'external-link' -%}
+  <path d="M10 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-4"/><polyline points="14 3 21 3 21 10"/><line x1="10.3" y1="13.7" x2="21" y2="3"/>
+{%- elif name == 'arrow-left' -%}
+  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="11 6 5 12 11 18"/>
+{%- elif name == 'chevron-right' -%}
+  <polyline points="9 5 16 12 9 19"/>
+{%- elif name == 'help-circle' -%}
+  <circle cx="12" cy="12" r="9"/><path d="M9.3 9.4a2.7 2.7 0 1 1 3.9 2.4c-.9.5-1.2 1-1.2 1.9"/><circle cx="12" cy="16.7" r="0.6" fill="currentColor" stroke="none"/>
+{%- elif name == 'message-square' -%}
+  <path d="M4.5 4.5h15a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H9l-4.5 4V5.5a1 1 0 0 1 1-1z"/>
+{%- elif name == 'edit-3' -%}
+  <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4.2.7L3.5 15.5z"/>
+{%- elif name == 'send' -%}
+  <line x1="21" y1="3" x2="10.5" y2="13.5"/><polygon points="21 3 14 21 10.5 13.5 3 10 21 3"/>
+{%- elif name == 'mail' -%}
+  <rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3.3 6 12 13 20.7 6"/>
+{%- elif name == 'eye' -%}
+  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+{%- elif name == 'zap' -%}
+  <polygon points="13 2 4 14 11 14 10 22 20 9 13 9 13 2"/>
+{%- elif name == 'user' -%}
+  <circle cx="12" cy="8" r="4"/><path d="M4.2 21c0-4.4 3.5-8 7.8-8s7.8 3.6 7.8 8"/>
+{%- elif name == 'flag' -%}
+  <path d="M5 21V4"/><path d="M5 4.5h12.5l-2.8 4.2 2.8 4.3H5"/>
+{%- elif name == 'calendar' -%}
+  <rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/>
+{%- elif name == 'briefcase' -%}
+  <rect x="3" y="7.5" width="18" height="12.5" rx="2"/><path d="M8 7.5V5.3a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2.2"/><line x1="3" y1="13" x2="21" y2="13"/>
+{%- elif name == 'trending-up' -%}
+  <polyline points="3 17 9.5 10.5 13.5 14.5 21 6"/><polyline points="15 6 21 6 21 12"/>
+{%- elif name == 'shield-check' -%}
+  <path d="M12 3 4.5 6v6c0 5 3.2 7.8 7.5 9 4.3-1.2 7.5-4 7.5-9V6z"/><polyline points="8.7 12.2 11 14.5 15.3 9.8"/>
+{%- elif name == 'log' -%}
+  <path d="M4 4.5h14l2 2V19a1 1 0 0 1-1 1H4z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12.5" y2="17"/>
+{%- endif -%}
+</svg>
+{% endmacro %}

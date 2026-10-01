@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}{{ c.name or c.original_filename }} &middot; Kargo Hiring{% endblock %}
+{% block content %}
+{% from "_icons.html" import icon %}
+<a href="/dashboard" class="muted-link" style="display:inline-flex; align-items:center; gap:6px; margin-bottom:16px">{{ icon('arrow-left', 14) }} Back to dashboard</a>
+
+<div class="card-row" style="align-items:flex-start; margin-bottom:8px">
+  <div style="display:flex; gap:14px; align-items:center">
+    <span class="avatar" style="width:46px; height:46px; font-size:16px; border-radius:12px">{{ (c.name or c.original_filename)[:1] | upper }}</span>
+    <div>
+      <h1 style="margin-bottom:4px">{{ c.name or '(name not set)' }}</h1>
+      <div style="display:flex; gap:8px; flex-wrap:wrap">
+        <span class="badge">{{ icon('briefcase', 11) }} {{ c.applied_role }}</span>
+        <span class="badge{% if c.status in ('needs_manual_review','pii_block') %} bad{% elif c.status in ('new','needs_name','role_unknown') %} warn{% elif c.status == 'sent' %} accent{% endif %}">{{ c.status }}</span>
+      </div>
+    </div>
+  </div>
+  <a href="/files/{{ c.id }}" class="btn secondary" style="text-decoration:none">{{ icon('external-link', 14) }} Open original file</a>
+</div>
+
+{% if c.parse_status == 'role_unknown' or c.applied_role == 'role_unknown' %}
+<div class="card" style="border-color:var(--warn-soft-border)">
+  <div style="display:flex; gap:12px; align-items:center">
+    <span class="icon-circle warn">{{ icon('help-circle', 18) }}</span>
+    <div><strong>Role not detected.</strong> <span class="sub" style="margin:0">Set it before scoring.</span></div>
+  </div>
+  <form method="post" action="/candidates/{{ c.id }}/role" style="margin-top:14px; display:flex; gap:10px; align-items:flex-end">
+    <div style="flex:1"><label style="margin-top:0">Role</label><select name="role"><option value="PM">PM</option><option value="SPM">SPM</option></select></div>
+    <button type="submit" class="secondary">{{ icon('check', 14) }} Set role</button>
+  </form>
+</div>
+{% endif %}
+
+{% if c.parse_status == 'needs_name' %}
+<div class="card" style="border-color:var(--warn-soft-border)">
+  <div style="display:flex; gap:12px; align-items:center">
+    <span class="icon-circle warn">{{ icon('user', 18) }}</span>
+    <div><strong>Name not found with confidence.</strong> <span class="sub" style="margin:0">Type it in before this CV can be scored.</span></div>
+  </div>
+  <form method="post" action="/candidates/{{ c.id }}/name" style="margin-top:14px; display:flex; gap:10px; align-items:flex-end">
+    <div style="flex:1"><label style="margin-top:0">Full name</label><input type="text" name="name" placeholder="e.g. Priya Sharma" required></div>
+    <button type="submit" class="secondary">{{ icon('check', 14) }} Set name</button>
+  </form>
+</div>
+{% endif %}
+
+{% if c.parse_status in ('needs_manual_review', 'pii_block') %}
+<div class="banner bad"><span class="icon">{{ icon('alert-triangle', 17) }}</span><span>Flagged: {{ c.parse_status }} &mdash; {{ c.parse_notes }}</span></div>
+{% endif %}
+
+{% if score %}
+<h2>{{ icon('trending-up', 15) }} Scores</h2>
+<div class="grid2">
+  <div class="card score-tile">
+    <div class="ring-value">{{ '%.1f' % score.pm_score }}</div>
+    <div class="ring-label">PM score / 100</div>
+    <div class="score-bar"><span style="width:{{ score.pm_score }}%"></span></div>
+  </div>
+  <div class="card score-tile">
+    <div class="ring-value">{{ '%.1f' % score.spm_score }}</div>
+    <div class="ring-label">SPM score / 100</div>
+    <div class="score-bar"><span style="width:{{ score.spm_score }}%"></span></div>
+  </div>
+</div>
+<div class="card tight" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+  <span class="badge">{{ icon('calendar', 11) }} PM years: {{ score.pm_years_from_cv if score.pm_years_from_cv is not none else 'unclear' }}</span>
+  <span class="badge">{{ score.years_flag }}</span>
+  {% if score.level_hint %}<span class="badge warn">{{ icon('trending-up', 11) }} other role scores 10+ higher &mdash; a hint, not a decision</span>{% endif %}
+  {% if score.injection_detected %}<span class="badge bad">{{ icon('alert-triangle', 11) }} instruction-like text detected in CV</span>{% endif %}
+</div>
+<p style="font-size:14px; color:var(--muted)">{{ score.one_line_rationale }}</p>
+
+<h2>{{ icon('flag', 15) }} Criteria &amp; evidence</h2>
+<div class="card" style="padding:0">
+<table>
+  <tr><th>Criterion</th><th>Level</th><th>Status</th><th>Evidence</th></tr>
+  {% for key, crit in criteria.items() %}
+  <tr>
+    <td style="font-weight:650">{{ key }}</td>
+    <td>
+      <span class="level-dots">{% for i in range(4) %}<i class="{{ 'on' if i < crit.level else '' }}"></i>{% endfor %}</span>
+      <span style="color:var(--muted); font-size:12px; margin-left:4px">{{ crit.level }}/4</span>
+    </td>
+    <td>{% if crit.status == 'unverified' %}<span class="badge bad">{{ icon('alert-triangle', 11) }} unverified</span>{% elif crit.status == 'evidenced' %}<span class="badge accent">{{ icon('check', 11) }} evidenced</span>{% else %}<span class="badge">{{ crit.status }}</span>{% endif %}</td>
+    <td class="evidence">{{ crit.evidence or '&mdash;' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+<h2>{{ icon('help-circle', 15) }} Probes</h2>
+<div class="card"><ul class="tight">{% for p in probes %}<li>{{ p }}</li>{% endfor %}</ul></div>
+
+{% if brief %}
+<h2>{{ icon('message-square', 15) }} Interview brief</h2>
+<div class="card">
+  <p style="margin-top:0">{{ brief.who_text }}</p>
+  <hr class="divider">
+  <strong style="font-size:13px">{{ icon('trending-up', 13) }} Why ranked here</strong>
+  <ul class="tight">{% for w in brief_why %}<li>{{ w }}</li>{% endfor %}</ul>
+  <strong style="font-size:13px">{{ icon('alert-circle', 13) }} Gaps</strong>
+  <ul class="tight">{% for g in brief_gaps %}<li>{{ g }}</li>{% endfor %}</ul>
+  <strong style="font-size:13px">{{ icon('help-circle', 13) }} Probes</strong>
+  <ul class="tight">{% for p in brief_probes %}<li>{{ p }}</li>{% endfor %}</ul>
+  {% if brief.level_note %}<p class="sub" style="margin-bottom:0">{{ brief.level_note }}</p>{% endif %}
+</div>
+{% endif %}
+{% elif c.parse_status == 'ok' %}
+<div class="card" style="text-align:center; padding:32px">
+  <span class="icon-circle neutral" style="margin:0 auto 10px">{{ icon('zap', 18) }}</span>
+  <p class="sub" style="margin:0 0 14px">Not scored yet.</p>
+  <form method="post" action="/candidates/{{ c.id }}/score">
+    <button type="submit" class="primary">{{ icon('zap', 14) }} Score this candidate</button>
+  </form>
+</div>
+{% endif %}
+
+<h2>{{ icon('send', 15) }} Decision</h2>
+<div class="card">
+  <form method="post" action="/candidates/{{ c.id }}/decision">
+    <div class="decision-group">
+      <input type="radio" name="decision" id="dec-pm" value="interview_pm" checked>
+      <label for="dec-pm"><span class="icon-circle" style="width:32px;height:32px">{{ icon('briefcase', 15) }}</span>Interview as PM</label>
+
+      <input type="radio" name="decision" id="dec-spm" value="interview_spm">
+      <label for="dec-spm"><span class="icon-circle" style="width:32px;height:32px">{{ icon('briefcase', 15) }}</span>Interview as SPM</label>
+
+      <input type="radio" name="decision" id="dec-pass" value="pass">
+      <label for="dec-pass"><span class="icon-circle neutral" style="width:32px;height:32px">{{ icon('flag', 15) }}</span>Pass</label>
+    </div>
+    <label>{{ icon('edit-3', 12) }} Note (optional, kept internally &mdash; never sent to the candidate)</label>
+    <textarea name="note" rows="2"></textarea>
+    <button type="submit" class="primary" style="margin-top:14px">{{ icon('send', 14) }} Record decision</button>
+  </form>
+</div>
+
+{% if drafts %}
+<h2>{{ icon('mail', 15) }} Drafts</h2>
+<div class="card" style="padding:0">
+<table>
+  <tr><th>Created</th><th>Subject</th><th>Reviewed</th><th></th></tr>
+  {% for d in drafts %}
+  <tr>
+    <td style="color:var(--muted)">{{ d.created_at }}</td>
+    <td>{{ d.subject }}</td>
+    <td>{% if d.reviewed %}<span class="badge accent">{{ icon('check', 11) }} yes</span>{% else %}<span class="badge">no</span>{% endif %}</td>
+    <td><a class="rowlink" href="/drafts/{{ d.id }}" style="display:inline-flex; align-items:center; gap:4px">Review {{ icon('chevron-right', 13) }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endif %}
+{% endblock %}

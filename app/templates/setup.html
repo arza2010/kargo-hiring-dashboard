@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}Setup &middot; Kargo Hiring{% endblock %}
+{% block main_class %} class="narrow"{% endblock %}
+{% block content %}
+{% from "_icons.html" import icon %}
+<div class="eyebrow">Gate 0.5</div>
+<h1>Setup</h1>
+<p class="sub">Nothing gets scored until you've read the pattern below and confirmed it. That confirmation is tied to the rubric file itself &mdash; if it changes, you'll need to confirm again.</p>
+
+{% if missing_env %}
+<div class="banner bad">
+  <span class="icon">{{ icon('alert-triangle', 17) }}</span>
+  <span>Missing from the environment: <code>{{ missing_env | join(', ') }}</code>. The app will run, but calls that need these will fail until they're set.</span>
+</div>
+{% endif %}
+
+<div class="card">
+  <div class="card-row">
+    <div style="display:flex; gap:14px; align-items:flex-start">
+      <span class="icon-circle{% if not confirmed %} warn{% endif %}">{{ icon('shield-check', 20) }}</span>
+      <div>
+        <div class="eyebrow" style="margin-bottom:4px">Pattern</div>
+        <h1 style="font-size:19px; margin:0">&ldquo;{{ rubric.pattern_name }}&rdquo;</h1>
+      </div>
+    </div>
+    {% if confirmed %}
+      <span class="badge accent">{{ icon('check', 12) }} Confirmed</span>
+    {% else %}
+      <span class="badge warn">{{ icon('alert-circle', 12) }} Awaiting confirmation</span>
+    {% endif %}
+  </div>
+  <p class="sub" style="margin:14px 0 0; display:flex; gap:18px">
+    <a class="muted-link" href="/setup/jd/PM" target="_blank" style="display:inline-flex; align-items:center; gap:5px">{{ icon('file-text', 14) }} PM JD</a>
+    <a class="muted-link" href="/setup/jd/SPM" target="_blank" style="display:inline-flex; align-items:center; gap:5px">{{ icon('file-text', 14) }} SPM JD</a>
+  </p>
+
+  <table style="margin-top:18px">
+    <tr><th>Criterion</th><th style="text-align:right">Weight</th></tr>
+    <tr><td>C1 &middot; Operator-side experience in the customer's world</td><td style="text-align:right">{{ weights.C1 }}</td></tr>
+    <tr><td>C2 &middot; Self-started fixes that other people adopted</td><td style="text-align:right">{{ weights.C2 }}</td></tr>
+    <tr><td>C3 &middot; Owns the outcome with no layer in between</td><td style="text-align:right">{{ weights.C3 }}</td></tr>
+    <tr><td>C4 &middot; Delivers under constraint</td><td style="text-align:right">{{ weights.C4 }}</td></tr>
+    <tr><td>C5 &middot; Product judgment at the applied level (PM &amp; SPM)</td><td style="text-align:right">{{ weights.C5 }}</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <div class="eyebrow" style="margin-bottom:8px">Part D</div>
+  <h2 style="margin:0 0 10px">{{ icon('flag', 15) }} Limits and flags for you to weigh</h2>
+  <pre style="white-space: pre-wrap; font-family: inherit; font-size: 13.5px; line-height:1.6; background:transparent; border:none; padding:0;">{{ rubric.parts.get('D', 'Part D not found in rubric file') }}</pre>
+</div>
+
+<div class="card" style="{% if confirmed %}background:var(--accent-soft); border-color:var(--accent-soft-border);{% endif %}">
+  {% if confirmed %}
+    <div class="card-row">
+      <div style="display:flex; gap:14px; align-items:center">
+        <span class="icon-circle">{{ icon('check-circle', 20) }}</span>
+        <div>
+          <strong style="color:var(--accent-strong)">Pattern confirmed</strong>
+          <p class="sub" style="margin:4px 0 0">{{ setup_row.confirmed_at }} &middot; rubric hash <code>{{ setup_row.rubric_hash[:12] }}&hellip;</code></p>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <form method="post" action="/setup/confirm">
+      <button type="submit" class="primary">{{ icon('check', 15) }} Confirm pattern</button>
+    </form>
+  {% endif %}
+</div>
+
+<h2>{{ icon('mail', 15) }} Email settings</h2>
+<div class="card">
+  <form method="post" action="/setup/settings">
+    <label style="display:flex; align-items:center; font-weight:500; color:var(--ink)"><input type="checkbox" name="acknowledge_delay" value="true" {% if setup_row and setup_row.acknowledge_delay %}checked{% endif %}> Acknowledge delay in draft emails ("sorry it took a while to get back to you")</label>
+    <button type="submit" class="secondary small" style="margin-top:14px">{{ icon('check', 13) }} Save</button>
+  </form>
+</div>
+
+<h2>{{ icon('users', 15) }} Add candidates</h2>
+<div class="card">
+  <div style="display:flex; gap:12px; align-items:center; margin-bottom:4px">
+    <span class="icon-circle neutral" style="width:32px;height:32px">{{ icon('upload-cloud', 16) }}</span>
+    <strong style="font-size:14px">Upload a CV</strong>
+  </div>
+  <p class="sub" style="margin:4px 0 16px">Works anywhere this app runs, including deployed &mdash; the file is stored in the database, not on disk.</p>
+  <form method="post" action="/candidates/upload" enctype="multipart/form-data">
+    <label>CV file (.docx or .pdf)</label>
+    <input type="file" name="file" accept=".docx,.pdf" required>
+    <label>Applied role</label>
+    <select name="role">
+      <option value="role_unknown">Auto-detect from filename</option>
+      <option value="PM">PM</option>
+      <option value="SPM">SPM</option>
+    </select>
+    <button type="submit" class="primary" style="margin-top:14px">{{ icon('upload-cloud', 15) }} Upload</button>
+  </form>
+</div>
+
+<div class="card">
+  <div style="display:flex; gap:12px; align-items:center; margin-bottom:4px">
+    <span class="icon-circle neutral" style="width:32px;height:32px">{{ icon('users', 16) }}</span>
+    <strong style="font-size:14px">Bulk upload</strong>
+  </div>
+  <p class="sub" style="margin:4px 0 16px">Select all your CVs at once (e.g. all 60 applications). Also works anywhere this app runs &mdash; each file is sent as its own small request, one at a time, so it sidesteps Vercel's 4.5&nbsp;MB per-request limit. Role is auto-detected per file from its filename.</p>
+  <label>CV files (.docx or .pdf, select multiple)</label>
+  <input type="file" id="bulk-files" accept=".docx,.pdf" multiple>
+  <button type="button" class="primary" id="bulk-upload-btn" onclick="bulkUpload()" style="margin-top:14px">{{ icon('upload-cloud', 15) }} Upload all</button>
+  <div id="bulk-progress" style="display:none; margin-top:14px">
+    <div class="card-row" style="margin-bottom:6px">
+      <span id="bulk-status" class="sub" style="margin:0">Starting&hellip;</span>
+      <span id="bulk-count" class="sub" style="margin:0">0 / 0</span>
+    </div>
+    <div class="progress-track"><span id="bulk-bar"></span></div>
+    <div class="upload-log" id="bulk-log"></div>
+  </div>
+</div>
+<script>
+async function bulkUpload() {
+  const input = document.getElementById('bulk-files');
+  const files = Array.from(input.files);
+  if (!files.length) { alert('Choose one or more CV files first.'); return; }
+
+  const btn = document.getElementById('bulk-upload-btn');
+  const progress = document.getElementById('bulk-progress');
+  const bar = document.getElementById('bulk-bar');
+  const status = document.getElementById('bulk-status');
+  const count = document.getElementById('bulk-count');
+  const log = document.getElementById('bulk-log');
+  btn.disabled = true;
+  progress.style.display = 'block';
+  log.innerHTML = '';
+  let ok = 0, failed = 0;
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    status.textContent = 'Uploading ' + file.name + '…';
+    count.textContent = (i + 1) + ' / ' + files.length;
+    bar.style.width = Math.round(((i + 1) / files.length) * 100) + '%';
+    const row = document.createElement('div');
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('role', 'role_unknown');
+      const resp = await fetch('/candidates/upload', { method: 'POST', body: fd });
+      if (resp.ok) { ok++; row.className = 'ok'; row.textContent = '✓ ' + file.name; }
+      else { failed++; row.className = 'err'; row.textContent = '✗ ' + file.name + ' (' + resp.status + ')'; }
+    } catch (e) {
+      failed++; row.className = 'err'; row.textContent = '✗ ' + file.name + ' (network error)';
+    }
+    log.prepend(row);
+  }
+  status.textContent = 'Done: ' + ok + ' uploaded' + (failed ? ', ' + failed + ' failed' : '') + '.';
+  count.textContent = files.length + ' / ' + files.length;
+  btn.disabled = false;
+  setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
+}
+</script>
+
+<div class="card">
+  <div style="display:flex; gap:12px; align-items:center; margin-bottom:4px">
+    <span class="icon-circle neutral" style="width:32px;height:32px">{{ icon('folder', 16) }}</span>
+    <strong style="font-size:14px">Import from disk</strong>
+  </div>
+  <p class="sub" style="margin:4px 0 16px">Local development only &mdash; walks <code>data/applications/</code> on this server's filesystem. Not available once deployed with no persistent disk (e.g. Vercel); use Upload a CV above there instead.</p>
+  <form method="post" action="/candidates/import-batch">
+    <button type="submit" class="secondary">{{ icon('folder', 15) }} Import batch from data/applications/</button>
+  </form>
+</div>
+{% endblock %}

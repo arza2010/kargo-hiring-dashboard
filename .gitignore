@@ -1,0 +1,11 @@
+.env
+*.db
+__pycache__/
+.venv/
+.pytest_cache/
+data/applications/*
+!data/applications/README.md
+.vercel
+.env*
+!.env.example
+.DS_Store

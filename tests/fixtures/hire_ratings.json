@@ -1,0 +1,11 @@
+{
+  "_note": "Hand scores from rubric v0.2 Part C. C1-C4 only, out of 75. Used by test_calibration.py.",
+  "cv_01_rohan_desai.docx":          {"rating": "Exceeds", "hand": {"C1": 4, "C2": 4, "C3": 4, "C4": 4}, "total": 75.0},
+  "cv_02_sunita_krishnamurthy.docx": {"rating": "Exceeds", "hand": {"C1": 4, "C2": 4, "C3": 4, "C4": 4}, "total": 75.0},
+  "cv_03_vikram_nair.docx":          {"rating": "Meets",   "hand": {"C1": 0, "C2": 2, "C3": 2, "C4": 0}, "total": 17.5},
+  "cv_04_aditya_shetty.docx":        {"rating": "Exceeds", "hand": {"C1": 3, "C2": 4, "C3": 4, "C4": 3}, "total": 65.0},
+  "cv_05_preetham_rao.docx":         {"rating": "Below",   "hand": {"C1": 2, "C2": 2, "C3": 2, "C4": 2}, "total": 37.5},
+  "cv_06_meghna_tiwari.docx":        {"rating": "Exceeds", "hand": {"C1": 4, "C2": 4, "C3": 4, "C4": 4}, "total": 75.0},
+  "cv_07_lavanya_iyer.docx":         {"rating": "Exceeds", "hand": {"C1": 4, "C2": 4, "C3": 4, "C4": 3}, "total": 72.5},
+  "cv_08_rahul_bose.docx":           {"rating": "Meets",   "hand": {"C1": 0, "C2": 2, "C3": 3, "C4": 0}, "total": 21.25}
+}

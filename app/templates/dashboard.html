@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Dashboard &middot; Kargo Hiring{% endblock %}
+{% block content %}
+{% from "_icons.html" import icon %}
+<h1>Dashboard</h1>
+<p class="sub">Every candidate stays visible and ranked. The system never chooses interview or pass &mdash; you do.</p>
+
+{% if unsent_count > 0 %}
+<div class="banner">
+  <span class="icon">{{ icon('inbox', 17) }}</span>
+  <span>{{ unsent_count }} decided candidate{{ 's' if unsent_count != 1 else '' }} ha{{ 've' if unsent_count != 1 else 's' }} unsent emails.</span>
+</div>
+{% endif %}
+{% if stale_count > 0 %}
+<div class="banner">
+  <span class="icon">{{ icon('clock', 17) }}</span>
+  <span>{{ stale_count }} candidate{{ 's' if stale_count != 1 else '' }} scored more than 7 days ago with no decision.</span>
+</div>
+{% endif %}
+
+<div class="grid3" style="margin-bottom:24px">
+  <div class="stat-tile">
+    <div class="card-row" style="align-items:flex-start">
+      <div><div class="n">{{ all_rows | length }}</div><div class="l">Total candidates</div></div>
+      <span class="icon-circle neutral" style="width:34px;height:34px">{{ icon('users', 16) }}</span>
+    </div>
+  </div>
+  <div class="stat-tile">
+    <div class="card-row" style="align-items:flex-start">
+      <div><div class="n">{{ pm_rows | length }} / {{ spm_rows | length }}</div><div class="l">PM / SPM applicants</div></div>
+      <span class="icon-circle neutral" style="width:34px;height:34px">{{ icon('briefcase', 16) }}</span>
+    </div>
+  </div>
+  <div class="stat-tile">
+    <div class="card-row" style="align-items:flex-start">
+      <div><div class="n">{{ all_rows | selectattr('status', 'equalto', 'sent') | list | length }}</div><div class="l">Sent</div></div>
+      <span class="icon-circle neutral" style="width:34px;height:34px">{{ icon('send', 16) }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="card-row" style="margin-bottom:16px; flex-wrap:wrap; gap:12px">
+  <div class="tabs">
+    <a href="#pm" onclick="showTab('pm')" id="tab-pm" class="active">PM ({{ pm_rows | length }})</a>
+    <a href="#spm" onclick="showTab('spm')" id="tab-spm">SPM ({{ spm_rows | length }})</a>
+    <a href="#all" onclick="showTab('all')" id="tab-all">All ({{ all_rows | length }})</a>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center">
+    <div style="position:relative">
+      <span style="position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--faint)">{{ icon('search', 15) }}</span>
+      <input type="text" id="filter-box" placeholder="Filter by name or rationale&hellip;" oninput="filterRows()" style="width:230px; padding-left:34px">
+    </div>
+    <form method="post" action="/score/all">
+      <button type="submit" class="primary">{{ icon('zap', 15) }} Score all</button>
+    </form>
+  </div>
+</div>
+
+{% macro row_table(rows, panel_id) %}
+<table id="{{ panel_id }}-table">
+  <tr><th>#</th><th>Candidate</th><th>Role</th><th>PM</th><th>SPM</th><th>Years flag</th><th>Status</th><th>Rationale</th></tr>
+  {% for r in rows %}
+  <tr class="data-row" data-search="{{ (r.name or r.original_filename) | lower }} {{ (r.one_line_rationale or '') | lower }}">
+    <td style="color:var(--faint)">{{ loop.index }}</td>
+    <td>
+      <div class="name-cell">
+        <span class="avatar">{{ (r.name or r.original_filename)[:1] | upper }}</span>
+        <div>
+          <a class="rowlink" href="/candidates/{{ r.id }}">{{ r.name or r.original_filename }}</a>
+          {% if r.level_hint %}<div><span class="badge warn" style="margin-top:3px">{{ icon('trending-up', 11) }} other role +10</span></div>{% endif %}
+        </div>
+      </div>
+    </td>
+    <td><span class="badge">{{ icon('briefcase', 11) }} {{ r.applied_role }}</span></td>
+    <td>
+      {% if r.pm_score is not none %}
+        <strong>{{ '%.1f' % r.pm_score }}</strong>
+        <div class="score-bar" style="width:64px"><span style="width:{{ r.pm_score }}%"></span></div>
+      {% else %}<span style="color:var(--faint)">&mdash;</span>{% endif %}
+    </td>
+    <td>
+      {% if r.spm_score is not none %}
+        <strong>{{ '%.1f' % r.spm_score }}</strong>
+        <div class="score-bar" style="width:64px"><span style="width:{{ r.spm_score }}%"></span></div>
+      {% else %}<span style="color:var(--faint)">&mdash;</span>{% endif %}
+    </td>
+    <td style="color:var(--muted); font-size:12.5px">{{ r.years_flag or '&mdash;' }}</td>
+    <td>
+      {% if r.status in ('needs_manual_review','pii_block') %}<span class="badge bad">{{ icon('alert-circle', 11) }} {{ r.status }}</span>
+      {% elif r.status in ('new','needs_name','role_unknown') %}<span class="badge warn">{{ icon('alert-triangle', 11) }} {{ r.status }}</span>
+      {% elif r.status == 'sent' %}<span class="badge accent">{{ icon('check', 11) }} {{ r.status }}</span>
+      {% else %}<span class="badge">{{ r.status }}</span>{% endif %}
+    </td>
+    <td style="max-width:260px; color:var(--muted)">{{ r.one_line_rationale or '' }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="8">
+    <div class="empty-state" style="text-align:center; padding:36px 0; color:var(--faint)">
+      {{ icon('inbox', 26) }}<div style="margin-top:8px; font-size:13px">No candidates in this tab yet.</div>
+    </div>
+  </td></tr>
+  {% endfor %}
+</table>
+{% endmacro %}
+
+<div id="panel-pm">{{ row_table(pm_rows, 'pm') }}</div>
+<div id="panel-spm" style="display:none">{{ row_table(spm_rows, 'spm') }}</div>
+<div id="panel-all" style="display:none">{{ row_table(all_rows, 'all') }}</div>
+
+<script>
+function showTab(name) {
+  for (const t of ['pm','spm','all']) {
+    document.getElementById('panel-' + t).style.display = (t === name) ? 'block' : 'none';
+    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+  }
+  filterRows();
+}
+function filterRows() {
+  const q = document.getElementById('filter-box').value.trim().toLowerCase();
+  document.querySelectorAll('.data-row').forEach(row => {
+    row.style.display = (!q || row.dataset.search.includes(q)) ? '' : 'none';
+  });
+}
+</script>
+{% endblock %}

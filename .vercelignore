@@ -1,0 +1,24 @@
+# Never ship real secrets as a bundled file — Vercel env vars carry these instead.
+.env
+.env.example
+
+.venv/
+.git/
+__pycache__/
+.pytest_cache/
+*.db
+tests/
+
+# Local-dev-only data: batch import (data/applications/) and calibration
+# fixtures (data/hires/) aren't needed by the deployed app — it reads/writes
+# candidate files via Postgres, not local disk. rubric/, prompts/ and
+# data/jds/ ARE needed at runtime and are deliberately not excluded here.
+data/applications/
+data/hires/
+
+# Internal planning docs, not part of the running app.
+PLAN.md
+RUN_REPORT.md
+KICKOFF.md
+KICKOFF_ONE_RUN.md
+/kargo_pm_spm_rubric.txt

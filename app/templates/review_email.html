@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Review draft &middot; Kargo Hiring{% endblock %}
+{% block content %}
+{% from "_icons.html" import icon %}
+<a href="/candidates/{{ candidate.id }}" class="muted-link" style="display:inline-flex; align-items:center; gap:6px; margin-bottom:16px">{{ icon('arrow-left', 14) }} Back to candidate</a>
+<h1>{{ icon('mail', 22) }} Review draft</h1>
+<p class="sub">To: <strong>{{ candidate.name or '(no name on file)' }}</strong> &middot; nothing is sent until you click Send below.</p>
+
+{% if demo_mode %}
+<div class="banner"><span class="icon">{{ icon('alert-triangle', 17) }}</span><span>DEMO_MODE is on &mdash; this will actually go to <strong>{{ demo_recipient or '(DEMO_RECIPIENT not set)' }}</strong>, with the subject prefixed <code>[DEMO &rarr; real address]</code>.</span></div>
+{% endif %}
+{% if draft.warning %}
+<div class="banner bad"><span class="icon">{{ icon('alert-triangle', 17) }}</span><span>{{ draft.warning }}</span></div>
+{% endif %}
+{% if already_sent %}
+<div class="banner"><span class="icon">{{ icon('check-circle', 17) }}</span><span>This draft has already been sent.</span></div>
+{% endif %}
+
+<div class="email-split">
+  <div>
+    <h2>{{ icon('edit-3', 15) }} Edit</h2>
+    <div class="card">
+      <form method="post" action="/drafts/{{ draft.id }}">
+        <label>Subject</label>
+        <input type="text" name="subject" value="{{ draft.subject }}">
+        <label>Body &mdash; edit freely, keep exactly one <code>{{ '{{first_name}}' }}</code></label>
+        <textarea name="body_text" rows="14">{{ draft.body_text }}</textarea>
+        <button type="submit" class="secondary" style="margin-top:14px">{{ icon('check', 14) }} Save</button>
+      </form>
+    </div>
+  </div>
+
+  <div>
+    <h2>{{ icon('eye', 15) }} Preview &mdash; name merged in</h2>
+    <div class="email-frame">
+      <div class="email-head">{{ icon('mail', 13) }} <strong style="color:var(--ink)">{{ draft.subject }}</strong></div>
+      <div class="email-body"><pre style="white-space: pre-wrap; font-family: inherit; margin:0; background:transparent; border:none; padding:0;">{{ preview_body }}</pre></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<form method="post" action="/drafts/{{ draft.id }}/send" onsubmit="return confirm('Send this email now?');">
+  {% if draft.reviewed and not already_sent %}
+    <button type="submit" class="primary">{{ icon('send', 15) }} Send</button>
+  {% else %}
+    <button type="submit" disabled title="Save the draft once to mark it reviewed before sending">{{ icon('send', 15) }} Send</button>
+    <span class="sub" style="display:inline; margin-left:10px">Save the draft above at least once to enable Send.</span>
+  {% endif %}
+</form>
+{% endblock %}
